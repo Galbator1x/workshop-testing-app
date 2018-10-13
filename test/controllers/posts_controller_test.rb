@@ -19,14 +19,16 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create post' do
     assert_difference('Post.count') do
-      post posts_url, params: { post: {
-        body: @post.body,
-        name: @post.name,
-        image_url: 'https://cdn-images-1.medium.com/max/1600/1*9hd_8qR0CMZ8L0pVbFLjDw.png'
-      } }
+      perform_enqueued_jobs do
+        post posts_url, params: { post: {
+          body: @post.body,
+          name: @post.name,
+          image_url: 'https://cdn-images-1.medium.com/max/1600/1*9hd_8qR0CMZ8L0pVbFLjDw.png'
+        } }
+      end
     end
 
-    assert !Post.last.image.nil?
+    assert Post.last.image.attached?
     assert_redirected_to post_url(Post.last)
   end
 
