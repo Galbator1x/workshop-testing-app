@@ -31,7 +31,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-    assert Post.last.image.attached?
+    assert { Post.last.image.attached? }
     assert_redirected_to post_url(Post.last)
   end
 
