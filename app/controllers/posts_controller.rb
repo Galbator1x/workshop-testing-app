@@ -24,11 +24,9 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(post_params)
-
+    @post = PostService.create!(post_params, params[:post][:image_url])
     respond_to do |format|
-      if @post.save
-        AttachImageJob.perform_later(@post.id, params[:post][:image_url])
+      if @post
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
