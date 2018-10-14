@@ -18,6 +18,9 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create post' do
+    stub_request(:get, 'https://cdn-images-1.medium.com/max/1600/1*9hd_8qR0CMZ8L0pVbFLjDw.png')
+      .to_return(body: File.read('test/fixtures/files/image.png'))
+
     assert_difference('Post.count') do
       perform_enqueued_jobs do
         post posts_url, params: { post: {
