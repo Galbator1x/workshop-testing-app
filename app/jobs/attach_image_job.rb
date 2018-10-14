@@ -1,6 +1,4 @@
 class AttachImageJob < ApplicationJob
-  require 'httparty'
-
   queue_as :default
 
   def perform(post_id, image_url)
